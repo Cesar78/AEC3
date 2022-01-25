@@ -72,7 +72,7 @@ static void write_header(struct wav_writer* ww, int length) {
 	write_int32(ww, length);
 }
 
-void* wav_write_open(const char *filename, int sample_rate, int bits_per_sample, int channels) {
+void* wav_write_open(const char *filename, int sample_rate, int bits_per_sample, int channels, int data_length) {
 	struct wav_writer* ww = (struct wav_writer*) malloc(sizeof(*ww));
 	memset(ww, 0, sizeof(*ww));
 	ww->wav = fopen(filename, "wb");
@@ -80,7 +80,7 @@ void* wav_write_open(const char *filename, int sample_rate, int bits_per_sample,
 		free(ww);
 		return NULL;
 	}
-	ww->data_length = 0;
+	ww->data_length = data_length;
 	ww->sample_rate = sample_rate;
 	ww->bits_per_sample = bits_per_sample;
 	ww->channels = channels;
